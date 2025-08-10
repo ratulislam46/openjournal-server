@@ -35,8 +35,7 @@ async function run() {
             const result = await allBlogCollection.insertOne(user);
             res.send(result)
         })
-
-        //http//:localhost:3000/blogs?searchParams=text
+       
         app.get('/blogs', async (req, res) => {
             const { searchParams } = req.query;
             let query = {}
