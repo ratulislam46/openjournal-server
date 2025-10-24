@@ -5,11 +5,9 @@ const cors = require('cors')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config()
 
-
 // middleware
 app.use(cors())
 app.use(express.json())
-
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ibgq1ve.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
@@ -21,11 +19,8 @@ const client = new MongoClient(uri, {
     }
 });
 
-
 async function run() {
     try {
-        await client.connect();
-
         const allBlogCollection = client.db('openjournal').collection('blogs')
         const allWishList = client.db('openjournal').collection('wishlist')
         const allComments = client.db('openjournal').collection('comments')
@@ -35,7 +30,7 @@ async function run() {
             const result = await allBlogCollection.insertOne(user);
             res.send(result)
         })
-       
+
         app.get('/blogs', async (req, res) => {
             const { searchParams } = req.query;
             let query = {}
@@ -106,12 +101,9 @@ async function run() {
             const result = await allComments.find(data).toArray();
             res.send(result)
         })
-
-        await client.db("admin").command({ ping: 1 });
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
     }
     finally {
-    
+
     }
 }
 run().catch(console.dir);
